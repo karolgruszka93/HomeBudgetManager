@@ -1,20 +1,18 @@
 package desktop.javafx.HomeBudgetManager.Application;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+
 public class Budget 
 {
-	private Calendar currentDate;
-	private Calendar chosenDate;
-	private BigDecimal amount;
-	private String amountDescription;
+	protected Calendar currentDate;
+	protected Calendar chosenDate;
 
 	Budget()
 	{
 		this.currentDate = Calendar.getInstance();
-		this.chosenDate = Calendar.getInstance();	
+		this.chosenDate = Calendar.getInstance();
 	}
 	
 //------GETTER'S------//
@@ -35,17 +33,6 @@ public class Budget
 		return chosenDate.get(Calendar.MONTH);
 	}
 	
-	protected BigDecimal getAmount()
-	{
-		return amount;
-	}
-	
-	protected String getAmountDescription()
-	{
-		return amountDescription;
-	}
-
-
 //------SETTER'S------//
 	
 	protected void setChosenDate(int month, int year) 
@@ -53,23 +40,4 @@ public class Budget
 		this.chosenDate.set(Calendar.YEAR, year);
 		this.chosenDate.set(Calendar.MONTH, month);
 	}
-	
-	protected void setAmount(BigDecimal amount)
-	{
-		this.amount = amount;
-	}
-	
-	protected void setAmountDescription(String amountDescription)
-	{
-		this.amountDescription = amountDescription;
-	}
-
-//------METHOD'S------//
-	
-	protected void addToBudget(String amountDescription, BigDecimal amount)
-	{
-		setAmountDescription(amountDescription);
-		setAmount(amount);
-	}
-	
 }

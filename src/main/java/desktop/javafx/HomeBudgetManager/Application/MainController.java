@@ -10,33 +10,23 @@ import javafx.scene.layout.StackPane;
 
 public class MainController 
 {
-	private ArrayList<Budget> budget;
-
+	private ArrayList<Budget> budget = new ArrayList<>(); 
 	@FXML 
 	private StackPane mainScreen;
 	private Pane pane = null;
 	
 //------SETTER'S------//
-
-	protected void setBudget(ArrayList<Budget> budget) 
-	{
-		this.budget = budget;
-	}
+	
     
 //------GETTER'S------//
-    
-	protected ArrayList<Budget> getBudget() 
-	{
-		return budget;
-	}
-    
+	
+
 //-----METHOD'S------// 
 	
 	@FXML
 	protected void initialize()
 	{
 		loadMenuScreen(); 
-		budget = new ArrayList<>(); 	
 	}
 
 	protected void loadMenuScreen() {

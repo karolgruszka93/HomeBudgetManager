@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,18 +16,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class ConstantExpensesController 
 {
-	private ConstantExpenses constantExpenses;
+	private ConstantExpenses constantExpenses = new ConstantExpenses();
 	private MainController mainController;
 	private Pane pane = null;
 	private Label warningLabel = null;
-	private ArrayList<Budget> budget;
-
+	
 	@FXML
     private Button backButton;
     @FXML
@@ -45,11 +47,7 @@ public class ConstantExpensesController
     @FXML
     private Label nowDateLabel;
     @FXML
-    private TableView<?> expensesTableView;
-    @FXML
-    private TableColumn<?, ?> expensesTableColumn;
-    @FXML
-    private TableColumn<?, ?> amountTebleColumn;
+    private TableView<ConstantExpenses> expensesTableView;
     @FXML
     private TextField textFieldYears;
     @FXML
@@ -57,16 +55,12 @@ public class ConstantExpensesController
     @FXML
     private TextField textFieldAmount;
 
-
-
 //------GETTER'S------//
     
 	protected MainController getMainController() 
 	{
 		return mainController;
 	}
-
-//------SETTER'S------//
 
 	protected void setMainController(MainController mainController) 
 	{
@@ -82,9 +76,8 @@ public class ConstantExpensesController
     }
     
     @FXML
-    private void onClickApplyButton(ActionEvent event) 
+    private void onClickApplyYearButton(ActionEvent event) 
     {
-    	constantExpenses = new ConstantExpenses();
     	try 
     	{
         	String inputYear = textFieldYears.getText();
@@ -103,6 +96,7 @@ public class ConstantExpensesController
             	comboBoxMonths.setDisable(true);
             	currentDateLabel.setVisible(true);
             	nowDateLabel.setText(constantExpenses.getCurrentDate());
+            	expensesTableView.setDisable(false);
         	}
         	else if(comboBoxMonths.getValue() == null)
         	{
@@ -117,32 +111,53 @@ public class ConstantExpensesController
     	{
     		loadWarningScreen("The 'year' field must contain a numeric value. \nTry again.");
     	}
-    	expensesTableView.setDisable(false);
     }
     
     @FXML
     private void onClickAddExpenseButton(ActionEvent event) 
     {
-    	budget = mainController.getBudget();
-    	String inputDescrition = textFieldExpenses.getText();
+    	String amountDescription = textFieldExpenses.getText();
        	try 
     	{
-       		BigDecimal imputAmount = new BigDecimal(textFieldAmount.getText().replace(',', '.'));
+       		BigDecimal inputAmount = new BigDecimal(textFieldAmount.getText().replace(',', '.'));
+       		if(inputAmount.doubleValue()<0)
+       		{
+       			loadWarningScreen("The 'amount' field must contain a positive value. \nTry again.");
+       		}
+       		if(amountDescription.isEmpty())
+       		{
+       			loadWarningScreen("Expense description cannot be empty. Try again.");
+       		}
+       		if((amountDescription.isEmpty()==false) & (inputAmount.doubleValue()>=0))
+       		{
+       	       	constantExpenses.addToBudget(amountDescription, inputAmount);
+       		}
     	}
        	catch(NumberFormatException e)
        	{
-       		loadWarningScreen("The 'amount' field must contain a positive numeric value. \nTry again.");
+       		loadWarningScreen("The 'amount' field must contain a numeric value. \nTry again.");
        	}
-    	// nie moge byc ujemnych i pustego opisu
-    }
+       	
+       	
+//       	expensesTableView.getItems().add(new ConstantExpenses("aaa", new BigDecimal(1), 1, 1));
+
+
+    	}
     
-    @FXML
+	@FXML
     private void initialize()
 	{
     	comboBoxMonths.getItems().addAll("January", "February", "March", "April", "May", "June", "July", "August", 
     			"September", "October", "November", "December");
     	
     	expensesTableView.setDisable(true);
+    	
+        TableColumn<ConstantExpenses, String> expenseDescriptionColumn = new TableColumn<>("EXPENSE");
+        expenseDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("amountDescription"));
+        TableColumn<ConstantExpenses, BigDecimal> amountColumn = new TableColumn<>("AMOUNT");
+        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        expensesTableView.getColumns().add(expenseDescriptionColumn);
+        expensesTableView.getColumns().add(amountColumn);
 	}
     
     private void loadWarningScreen(String warningText)
