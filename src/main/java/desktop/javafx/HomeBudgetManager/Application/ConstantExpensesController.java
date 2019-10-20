@@ -2,10 +2,6 @@ package desktop.javafx.HomeBudgetManager.Application;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +30,10 @@ public class ConstantExpensesController
     private Button applyYearButton;
     @FXML
     private Button addExpenseButton;
+    @FXML
+    private Button removeExpenseButton;
+    @FXML
+    private Button saveExpenseButton;
     @FXML
     private ComboBox<String> comboBoxMonths;
     @FXML
@@ -76,6 +76,12 @@ public class ConstantExpensesController
     }
     
     @FXML
+    void onClickSaveExpenseButton(ActionEvent event)
+    {
+
+    }
+    
+    @FXML
     private void onClickApplyYearButton(ActionEvent event) 
     {
     	try 
@@ -97,6 +103,10 @@ public class ConstantExpensesController
             	currentDateLabel.setVisible(true);
             	nowDateLabel.setText(constantExpenses.getCurrentDate());
             	expensesTableView.setDisable(false);
+            	addExpenseButton.setDisable(false);
+            	removeExpenseButton.setDisable(false);
+            	textFieldExpenses.setDisable(false);
+            	textFieldAmount.setDisable(false);
         	}
         	else if(comboBoxMonths.getValue() == null)
         	{
@@ -111,6 +121,13 @@ public class ConstantExpensesController
     	{
     		loadWarningScreen("The 'year' field must contain a numeric value. \nTry again.");
     	}
+    }
+    
+    @FXML
+    void onClickRemoveExpenseButton(ActionEvent event) 
+    {
+    	ConstantExpenses selectedItem = expensesTableView.getSelectionModel().getSelectedItem();
+    	expensesTableView.getItems().remove(selectedItem);
     }
     
     @FXML
@@ -131,6 +148,8 @@ public class ConstantExpensesController
        		if((amountDescription.isEmpty()==false) & (inputAmount.doubleValue()>=0))
        		{
        	       	constantExpenses.addToBudget(amountDescription, inputAmount);
+       	       	expensesTableView.getItems().add(new ConstantExpenses(amountDescription, inputAmount, 
+       	       									 constantExpenses.getChosenMonth(), constantExpenses.getChosenYear()));
        		}
     	}
        	catch(NumberFormatException e)
@@ -139,7 +158,7 @@ public class ConstantExpensesController
        	}
        	
        	
-//       	expensesTableView.getItems().add(new ConstantExpenses("aaa", new BigDecimal(1), 1, 1));
+      //	
 
 
     	}
@@ -151,6 +170,11 @@ public class ConstantExpensesController
     			"September", "October", "November", "December");
     	
     	expensesTableView.setDisable(true);
+    	addExpenseButton.setDisable(true);
+    	removeExpenseButton.setDisable(true);
+    	saveExpenseButton.setDisable(true);
+    	textFieldExpenses.setDisable(true);
+    	textFieldAmount.setDisable(true);
     	
         TableColumn<ConstantExpenses, String> expenseDescriptionColumn = new TableColumn<>("EXPENSE");
         expenseDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("amountDescription"));
