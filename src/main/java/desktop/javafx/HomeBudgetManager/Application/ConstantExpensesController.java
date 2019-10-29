@@ -2,6 +2,8 @@ package desktop.javafx.HomeBudgetManager.Application;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +21,7 @@ import javafx.stage.StageStyle;
 
 public class ConstantExpensesController 
 {
+	private ArrayList<Budget> constantExpensesList = new ArrayList<>(); //przeniesc do MainController
 	private ConstantExpenses constantExpenses = new ConstantExpenses();
 	private MainController mainController;
 	private Pane pane = null;
@@ -51,7 +54,7 @@ public class ConstantExpensesController
     @FXML
     private TextField textFieldYears;
     @FXML
-    private TextField textFieldExpenses;
+    private TextField textFieldExpensesDescription;
     @FXML
     private TextField textFieldAmount;
 
@@ -78,7 +81,14 @@ public class ConstantExpensesController
     @FXML
     void onClickSaveExpenseButton(ActionEvent event)
     {
-
+    	for(int i=0; i<constantExpensesList.size(); i++)
+    	{
+    		constantExpensesList.remove(i); 
+    	}
+    	for(int i=0; i<expensesTableView.getItems().size(); i++)
+    	{
+    		constantExpensesList.add(expensesTableView.getItems().get(i));
+    	}
     }
     
     @FXML
@@ -105,7 +115,7 @@ public class ConstantExpensesController
             	expensesTableView.setDisable(false);
             	addExpenseButton.setDisable(false);
             	removeExpenseButton.setDisable(false);
-            	textFieldExpenses.setDisable(false);
+            	textFieldExpensesDescription.setDisable(false);
             	textFieldAmount.setDisable(false);
         	}
         	else if(comboBoxMonths.getValue() == null)
@@ -128,12 +138,16 @@ public class ConstantExpensesController
     {
     	ConstantExpenses selectedItem = expensesTableView.getSelectionModel().getSelectedItem();
     	expensesTableView.getItems().remove(selectedItem);
+    	if(expensesTableView.getItems().isEmpty() == true)
+    	{
+    		saveExpenseButton.setDisable(true);
+    	}
     }
     
     @FXML
     private void onClickAddExpenseButton(ActionEvent event) 
     {
-    	String amountDescription = textFieldExpenses.getText();
+    	String amountDescription = textFieldExpensesDescription.getText();
        	try 
     	{
        		BigDecimal inputAmount = new BigDecimal(textFieldAmount.getText().replace(',', '.'));
@@ -150,6 +164,9 @@ public class ConstantExpensesController
        	       	constantExpenses.addToBudget(amountDescription, inputAmount);
        	       	expensesTableView.getItems().add(new ConstantExpenses(amountDescription, inputAmount, 
        	       									 constantExpenses.getChosenMonth(), constantExpenses.getChosenYear()));
+       	       	textFieldExpensesDescription.clear();
+       	       	textFieldAmount.clear();
+       	       	saveExpenseButton.setDisable(false);
        		}
     	}
        	catch(NumberFormatException e)
@@ -158,10 +175,7 @@ public class ConstantExpensesController
        	}
        	
        	
-      //	
-
-
-    	}
+    }
     
 	@FXML
     private void initialize()
@@ -173,7 +187,7 @@ public class ConstantExpensesController
     	addExpenseButton.setDisable(true);
     	removeExpenseButton.setDisable(true);
     	saveExpenseButton.setDisable(true);
-    	textFieldExpenses.setDisable(true);
+    	textFieldExpensesDescription.setDisable(true);
     	textFieldAmount.setDisable(true);
     	
         TableColumn<ConstantExpenses, String> expenseDescriptionColumn = new TableColumn<>("EXPENSE");
