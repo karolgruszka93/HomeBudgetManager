@@ -1,6 +1,7 @@
 package desktop.javafx.HomeBudgetManager.Application;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.stage.StageStyle;
 
 public class MenuController 
 {
+	private ArrayList<Budget> constantExpensesList;
 	private MainController mainController;
 	private Pane pane = null;
 	
@@ -42,12 +44,22 @@ public class MenuController
 	{
 		this.mainController = mainController;
 	}
+	
+	public void setConstantExpensesList(ArrayList<Budget> constantExpensesList)
+	{
+		this.constantExpensesList = constantExpensesList;
+	}
 
 //------GETTER'S------//
 	
 	protected MainController getMainController() 
 	{
 		return mainController;
+	}
+	
+	public ArrayList<Budget> getConstantExpensesList() 
+	{
+		return constantExpensesList;
 	}
 	
 //------METHOD'S------//
@@ -102,6 +114,14 @@ public class MenuController
 		mainController.setScreen(pane); 
 		ConstantExpensesController constantExpensesController = loader.getController();
 		constantExpensesController.setMainController(mainController);
+		constantExpensesController.setConstantExpensesList(constantExpensesList);
+/*	   	if(constantExpensesList.size() != 0)
+	   	{
+    		for(int i=0; i<constantExpensesList.size(); i++)
+    		{
+    			System.out.println(constantExpensesList.get(i));
+    		}
+    	} */
 	}
 
 	@FXML

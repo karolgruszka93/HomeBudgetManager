@@ -21,9 +21,10 @@ import javafx.stage.StageStyle;
 
 public class ConstantExpensesController 
 {
-	private ArrayList<Budget> constantExpensesList = new ArrayList<>(); //przeniesc do MainController
+	private ArrayList<Budget> constantExpensesList;
 	private ConstantExpenses constantExpenses = new ConstantExpenses();
 	private MainController mainController;
+
 	private Pane pane = null;
 	private Label warningLabel = null;
 	
@@ -64,10 +65,21 @@ public class ConstantExpensesController
 	{
 		return mainController;
 	}
+	public ArrayList<Budget> getConstantExpensesList() 
+	{
+		return constantExpensesList;
+	}
 
+//------SETTER'S------//
+	
 	protected void setMainController(MainController mainController) 
 	{
 		this.mainController = mainController;
+	}
+	
+	public void setConstantExpensesList(ArrayList<Budget> constantExpensesList) 
+	{
+		this.constantExpensesList = constantExpensesList;
 	}
 
 //------METHODS'S------//
@@ -81,14 +93,16 @@ public class ConstantExpensesController
     @FXML
     void onClickSaveExpenseButton(ActionEvent event)
     {
-    	for(int i=0; i<constantExpensesList.size(); i++)
-    	{
-    		constantExpensesList.remove(i); 
-    	}
+
+    //	for(int i=0; i<constantExpensesList.size(); i++)
+   // 	{
+   // 		constantExpensesList.remove(i); 
+   // 	}
     	for(int i=0; i<expensesTableView.getItems().size(); i++)
     	{
     		constantExpensesList.add(expensesTableView.getItems().get(i));
     	}
+
     }
     
     @FXML
@@ -130,6 +144,19 @@ public class ConstantExpensesController
     	catch(NumberFormatException e)
     	{
     		loadWarningScreen("The 'year' field must contain a numeric value. \nTry again.");
+    	}
+    	
+    	if (constantExpensesList.size() != 0)
+    	{
+    		for(int i=0; i<constantExpensesList.size(); i++)
+    		{
+    			if((constantExpensesList.get(i) instanceof ConstantExpenses) 
+    					&& ((constantExpensesList).get(i).getChosenMonth() == constantExpenses.getChosenMonth())
+    					&& ((constantExpensesList).get(i).getChosenYear() == constantExpenses.getChosenYear()))
+    			{
+    				System.out.println("is ins");
+    			}
+    		}
     	}
     }
     
@@ -174,7 +201,7 @@ public class ConstantExpensesController
        		loadWarningScreen("The 'amount' field must contain a numeric value. \nTry again.");
        	}
        	
-       	
+
     }
     
 	@FXML
