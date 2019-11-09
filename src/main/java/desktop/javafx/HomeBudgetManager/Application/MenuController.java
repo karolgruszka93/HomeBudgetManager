@@ -115,13 +115,6 @@ public class MenuController
 		ConstantExpensesController constantExpensesController = loader.getController();
 		constantExpensesController.setMainController(mainController);
 		constantExpensesController.setConstantExpensesList(constantExpensesList);
-/*	   	if(constantExpensesList.size() != 0)
-	   	{
-    		for(int i=0; i<constantExpensesList.size(); i++)
-    		{
-    			System.out.println(constantExpensesList.get(i));
-    		}
-    	} */
 	}
 
 	@FXML
