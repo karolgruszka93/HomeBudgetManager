@@ -1,36 +1,21 @@
 package desktop.javafx.HomeBudgetManager.Application;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
-public class ConstantExpensesController 
+public class ConstantExpensesController extends BudgetController
 {
 	private ConstantExpenses constantExpenses = new ConstantExpenses();
-	private ArrayList<Budget> constantExpensesList = null;
-	private MainController mainController = null;
-	private Pane pane = null;
-	private Label warningLabel = null;
+	private ArrayList<Budget> budgetList = null;
 	
-	@FXML
-    private Button backButton;
-    @FXML
-    private Button applyYearButton;
     @FXML
     private Button addExpenseButton;
     @FXML
@@ -38,21 +23,7 @@ public class ConstantExpensesController
     @FXML
     private Button saveExpenseButton;
     @FXML
-    private ComboBox<String> comboBoxMonths;
-    @FXML
-    private Label selectedDateLabel;
-    @FXML
-    private Label monthLabel;
-    @FXML
-    private Label yearLabel;
-    @FXML
-    private Label currentDateLabel;
-    @FXML
-    private Label nowDateLabel;
-    @FXML
     private TableView<ConstantExpenses> expensesTableView;
-    @FXML
-    private TextField textFieldYears;
     @FXML
     private TextField textFieldExpensesDescription;
     @FXML
@@ -60,25 +31,16 @@ public class ConstantExpensesController
 
 //------GETTER'S------//
     
-	protected MainController getMainController() 
+	public ArrayList<Budget> getBudgetList() 
 	{
-		return mainController;
-	}
-	public ArrayList<Budget> getConstantExpensesList() 
-	{
-		return constantExpensesList;
+		return budgetList;
 	}
 
 //------SETTER'S------//
 	
-	protected void setMainController(MainController mainController) 
+	public void setBudgetList(ArrayList<Budget> budgetList) 
 	{
-		this.mainController = mainController;
-	}
-	
-	public void setConstantExpensesList(ArrayList<Budget> constantExpensesList) 
-	{
-		this.constantExpensesList = constantExpensesList;
+		this.budgetList = budgetList;
 	}
 
 //------METHODS'S------//
@@ -145,16 +107,16 @@ public class ConstantExpensesController
     		loadWarningScreen("The 'year' field must contain a numeric value. \nTry again.");
     	}
     	
-    	if (constantExpensesList.size() != 0)
+    	if (budgetList.size() != 0)
     	{
-    		for(int i=0; i<constantExpensesList.size(); i++)
+    		for(int i=0; i<budgetList.size(); i++)
     		{
-    			if((constantExpensesList.get(i) instanceof ConstantExpenses) 
-    					&& (constantExpensesList.get(i).getChosenMonth() == constantExpenses.getChosenMonth())
-    					&& (constantExpensesList.get(i).getChosenYear() == constantExpenses.getChosenYear()))
+    			if((budgetList.get(i) instanceof ConstantExpenses) 
+    					&& (budgetList.get(i).getChosenMonth() == constantExpenses.getChosenMonth())
+    					&& (budgetList.get(i).getChosenYear() == constantExpenses.getChosenYear()))
     			{
-    				expensesTableView.getItems().add(new ConstantExpenses(constantExpensesList.get(i).getAmountDescription(), 
-    						constantExpensesList.get(i).getAmount(), constantExpenses.getChosenMonth(), constantExpenses.getChosenYear()));
+    				expensesTableView.getItems().add(new ConstantExpenses(budgetList.get(i).getAmountDescription(), 
+    						budgetList.get(i).getAmount(), constantExpenses.getChosenMonth(), constantExpenses.getChosenYear()));
     			}
     		}
     	}
@@ -199,70 +161,19 @@ public class ConstantExpensesController
     @FXML
     void onClickSaveExpenseButton(ActionEvent event)
     {
-    	for(int i=constantExpensesList.size()-1; i>=0; i--)
+    	for(int i=budgetList.size()-1; i>=0; i--)
     	{
-    		if((constantExpensesList.get(i) instanceof ConstantExpenses) 
-    				&& (constantExpensesList.get(i).getChosenMonth() == constantExpenses.getChosenMonth())
-    				&& (constantExpensesList.get(i).getChosenYear() == constantExpenses.getChosenYear()))
+    		if((budgetList.get(i) instanceof ConstantExpenses) 
+    				&& (budgetList.get(i).getChosenMonth() == constantExpenses.getChosenMonth())
+    				&& (budgetList.get(i).getChosenYear() == constantExpenses.getChosenYear()))
     		{
-    			constantExpensesList.remove(i);
+    			budgetList.remove(i);
     		}
     	}
 
     	for(int i=0; i<expensesTableView.getItems().size(); i++)
     	{
-    		constantExpensesList.add(expensesTableView.getItems().get(i));
+    		budgetList.add(expensesTableView.getItems().get(i));
     	}
-    }
-    
-    @FXML
-    private void onClickBackButton(ActionEvent event) 
-    {
-    	mainController.loadMenuScreen();
-    }
-    
-    private void loadWarningScreen(String warningText)
-    {
-		FXMLLoader loader = new FXMLLoader();
-    	loader.setLocation(this.getClass().getResource("/fxml/WarningScreen.fxml"));
-    	try 
-    	{
-			pane = loader.load();
-		} 
-    	catch (IOException e) 
-    	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	Scene scene = new Scene(pane);
-    	Stage stage = new Stage();
-    	stage.setResizable(false);
-    	stage.setAlwaysOnTop(true);
-    	stage.initStyle(StageStyle.UTILITY);
-    	stage.setTitle("Warning");
-    	stage.setScene(scene);
-    	stage.show();
-    	
-    	WarningController warningController = loader.getController();
-    	warningLabel = warningController.getWarningLabel();
-    	warningLabel.setText(warningText);
-    }
-    
-    private int parseMonth(String month)
-    {
-		int inputMonth = 0;
-   		if(comboBoxMonths.getValue().compareTo("January") == 0) inputMonth = 0;
-		if(comboBoxMonths.getValue().compareTo("February") == 0) inputMonth = 1;
-		if(comboBoxMonths.getValue().compareTo("March") == 0) inputMonth = 2;
-		if(comboBoxMonths.getValue().compareTo("April") == 0) inputMonth = 3;
-		if(comboBoxMonths.getValue().compareTo("May") == 0) inputMonth = 4;
-		if(comboBoxMonths.getValue().compareTo("June") == 0) inputMonth = 5;
-		if(comboBoxMonths.getValue().compareTo("July") == 0) inputMonth = 6;
-		if(comboBoxMonths.getValue().compareTo("August") == 0) inputMonth = 7;
-		if(comboBoxMonths.getValue().compareTo("September") == 0) inputMonth = 8;
-		if(comboBoxMonths.getValue().compareTo("October") == 0) inputMonth = 9;
-		if(comboBoxMonths.getValue().compareTo("November") == 0) inputMonth = 10;
-		if(comboBoxMonths.getValue().compareTo("December") == 0) inputMonth = 11;
-		return inputMonth;
     }
 }

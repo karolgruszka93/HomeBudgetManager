@@ -10,7 +10,7 @@ import javafx.scene.layout.StackPane;
 
 public class MainController 
 {
-	private ArrayList<Budget> constantExpensesList = new ArrayList<>();
+	private ArrayList<Budget> budgetList = new ArrayList<>();
 	@FXML 
 	private StackPane mainScreen;
 	private Pane pane = null;
@@ -47,7 +47,7 @@ public class MainController
 		setScreen(pane);
 		MenuController menuController = loader.getController();
 		menuController.setMainController(this);
-		menuController.setConstantExpensesList(constantExpensesList);
+		menuController.setBudgetList(budgetList);
 	}
 	
 	protected void setScreen(Pane pane)

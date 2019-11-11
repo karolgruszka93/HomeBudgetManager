@@ -15,7 +15,7 @@ import javafx.stage.StageStyle;
 
 public class MenuController 
 {
-	private ArrayList<Budget> constantExpensesList;
+	private ArrayList<Budget> budgetList;
 	private MainController mainController;
 	private Pane pane = null;
 	
@@ -45,9 +45,9 @@ public class MenuController
 		this.mainController = mainController;
 	}
 	
-	public void setConstantExpensesList(ArrayList<Budget> constantExpensesList)
+	public void setBudgetList(ArrayList<Budget> budgetList)
 	{
-		this.constantExpensesList = constantExpensesList;
+		this.budgetList = budgetList;
 	}
 
 //------GETTER'S------//
@@ -57,9 +57,9 @@ public class MenuController
 		return mainController;
 	}
 	
-	public ArrayList<Budget> getConstantExpensesList() 
+	public ArrayList<Budget> getBudgetList() 
 	{
-		return constantExpensesList;
+		return budgetList;
 	}
 	
 //------METHOD'S------//
@@ -114,7 +114,7 @@ public class MenuController
 		mainController.setScreen(pane); 
 		ConstantExpensesController constantExpensesController = loader.getController();
 		constantExpensesController.setMainController(mainController);
-		constantExpensesController.setConstantExpensesList(constantExpensesList);
+		constantExpensesController.setBudgetList(budgetList);
 	}
 
 	@FXML
@@ -190,6 +190,7 @@ public class MenuController
 		mainController.setScreen(pane); 
 		SavingsController savingsController = loader.getController();
 		savingsController.setMainController(mainController);
+		savingsController.setBudgetList(budgetList);;
 	}
 
 	@FXML

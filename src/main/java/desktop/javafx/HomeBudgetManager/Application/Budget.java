@@ -72,4 +72,6 @@ public class Budget
 		this.amountDescription = amountDescription;
 		this.amount = amount;	
 	}
+	
+
 }

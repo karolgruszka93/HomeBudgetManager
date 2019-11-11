@@ -3,15 +3,14 @@ package desktop.javafx.HomeBudgetManager.Application;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
-public class ConstantExpenses extends Budget
+public class Savings extends Budget
 {
-
-	ConstantExpenses()
+	Savings()
 	{
 		super();
 	}
 	
-	ConstantExpenses(String amountDescription, BigDecimal amount, int month, int year)
+	Savings(String amountDescription, BigDecimal amount, int month, int year)
 	{
 		super.currentDate = Calendar.getInstance();
 		super.chosenDate = Calendar.getInstance();
@@ -31,5 +30,4 @@ public class ConstantExpenses extends Budget
 
 //------METHOD'S------//
 	
-
 }
