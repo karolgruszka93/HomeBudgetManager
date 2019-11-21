@@ -1,13 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.221" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desktop.javafx.HomeBudgetManager.Application.SummaryController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desktop.javafx.HomeBudgetManager.Application.SummaryController">
    <children>
       <Button fx:id="backButton" layoutX="325.0" layoutY="450.0" mnemonicParsing="false" onAction="#onClickBackButton" prefWidth="50.0" text="Back" />
       <Separator layoutX="-1.0" layoutY="417.0" prefHeight="14.0" prefWidth="700.0" />
+      <TabPane fx:id="tabPane" layoutY="90.0" prefHeight="330.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="constantExpensesTab" text="Constant expenses" />
+          <Tab fx:id="plannedExpensesTab" text="Planned expenses" />
+          <Tab fx:id="savingsTab" text="Savings" />
+          <Tab fx:id="allExpensesTab" text="All expenses" />
+        </tabs>
+      </TabPane>
+      <TextField fx:id="textFieldYears" layoutX="14.0" layoutY="36.0" prefHeight="25.0" prefWidth="80.0" promptText="Enter year" />
+      <Button fx:id="applyYearButton" layoutX="97.0" layoutY="36.0" mnemonicParsing="false" onAction="#onClickApplyYearButton" text="Apply" />
+      <Separator layoutY="22.0" prefHeight="14.0" prefWidth="700.0" />
+      <Label layoutX="14.0" layoutY="2.0" prefHeight="25.0" prefWidth="105.0" text="1. Set a year" textFill="#00000080">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Separator layoutY="82.0" prefHeight="14.0" prefWidth="700.0" />
+      <Label layoutX="14.0" layoutY="64.0" prefHeight="25.0" prefWidth="193.0" text="2. Charts" textFill="#00000080">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

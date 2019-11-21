@@ -67,7 +67,7 @@ public class SavingsController extends BudgetController
 	}
     
     @FXML
-    void onClickAddSavingButton(ActionEvent event) 
+    private void onClickAddSavingButton(ActionEvent event) 
     {
     	String amountDescription = textFieldSavingsDescription.getText();
        	try 
@@ -96,7 +96,7 @@ public class SavingsController extends BudgetController
     }
 
     @FXML
-    void onClickApplyYearButton(ActionEvent event)
+    private void onClickApplyYearButton(ActionEvent event)
     {
       	try 
     	{
@@ -152,14 +152,14 @@ public class SavingsController extends BudgetController
     }
     
     @FXML
-    void onClickRemoveSavingButton(ActionEvent event) 
+    private void onClickRemoveSavingButton(ActionEvent event) 
     {
     	Savings selectedItem = savingsTableView.getSelectionModel().getSelectedItem();
     	savingsTableView.getItems().remove(selectedItem);
     }
 
     @FXML
-    void onClickSaveSavingsButton(ActionEvent event) 
+    private void onClickSaveSavingsButton(ActionEvent event) 
     {
     	for(int i=budgetList.size()-1; i>=0; i--)
     	{

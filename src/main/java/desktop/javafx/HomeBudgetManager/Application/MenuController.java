@@ -93,7 +93,6 @@ public class MenuController
     	stage.setTitle("About Screen");
     	stage.setScene(scene);
     	stage.show();
-    	
 	}
 
 	@FXML
@@ -164,6 +163,7 @@ public class MenuController
 		mainController.setScreen(pane); 
 		PlannedExpensesController plannedExpensesController = loader.getController();
 		plannedExpensesController.setMainController(mainController);
+		plannedExpensesController.setBudgetList(budgetList);
 	}
 
 	@FXML
@@ -207,10 +207,10 @@ public class MenuController
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
     	mainController.setScreen(pane); 
     	SummaryController summaryController = loader.getController();
     	summaryController.setMainController(mainController);
+    	summaryController.setBudgetList(budgetList);
 	}
 	
 	@FXML
