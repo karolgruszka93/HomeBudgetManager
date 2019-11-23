@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
-public class Budget 
+public abstract class Budget 
 {
 	protected Calendar currentDate;
 	protected Calendar chosenDate;
@@ -63,7 +63,6 @@ public class Budget
 	{
 		this.amount = amount;
 	}
-	
 	
 //------METHOD'S------//
 	

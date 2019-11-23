@@ -16,8 +16,8 @@
       <TabPane fx:id="tabPane" layoutY="90.0" prefHeight="330.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="constantExpensesTab" text="Constant expenses" />
-          <Tab fx:id="plannedExpensesTab" text="Planned expenses" />
           <Tab fx:id="savingsTab" text="Savings" />
+          <Tab fx:id="plannedExpensesTab" text="Planned expenses" />
           <Tab fx:id="allExpensesTab" text="All expenses" />
         </tabs>
       </TabPane>

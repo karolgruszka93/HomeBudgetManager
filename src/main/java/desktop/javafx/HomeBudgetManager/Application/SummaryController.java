@@ -20,9 +20,9 @@ public class SummaryController extends BudgetController
     @FXML
     private Tab constantExpensesTab;
     @FXML
-    private Tab plannedExpensesTab;
-    @FXML
     private Tab savingsTab;
+    @FXML
+    private Tab plannedExpensesTab;
     @FXML
     private Tab allExpensesTab;
 
@@ -65,8 +65,10 @@ public class SummaryController extends BudgetController
     	{
     		loadWarningScreen("The 'year' field must contain a numeric value. \nTry again.");
     	} 
-      	
 		loadConstantExpensesTab();
+		loadSavingsTab();
+		loadPlannedExpensesTab();
+		loadAllExpensesTab();
     }
     
 	@FXML
@@ -91,6 +93,67 @@ public class SummaryController extends BudgetController
 		}
 		constantExpensesTab.setContent(pane);
 		ConstantExpensesTabController constantExpensesTabController = loader.getController();
-		constantExpensesTabController.drawChart(budgetList, chosenYear);
+		constantExpensesTabController.drawChart(constantExpensesTabController.prepareDataToChart(budgetList, chosenYear));
+	}
+	
+	protected void loadSavingsTab()
+	{
+		Pane pane = null;
+		FXMLLoader loader = new FXMLLoader();
+    	loader.setLocation(this.getClass().getResource("/fxml/SavingsTab.fxml"));
+    	try 
+    	{
+			pane = loader.load();
+
+		} 
+    	catch (IOException e) 
+    	{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pane.getStylesheets().add("/css/SavingsChartStyle.css");
+		savingsTab.setContent(pane);
+		SavingsTabController savingsTabController = loader.getController();
+		savingsTabController.drawChart(savingsTabController.prepareDataToChart(budgetList, chosenYear));
+	}
+	
+	protected void loadPlannedExpensesTab()
+	{
+		Pane pane = null;
+		FXMLLoader loader = new FXMLLoader();
+    	loader.setLocation(this.getClass().getResource("/fxml/PlannedExpensesTab.fxml"));
+    	try 
+    	{
+			pane = loader.load();
+		} 
+    	catch (IOException e) 
+    	{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	pane.getStylesheets().add("/css/PlannedExpensesChartStyle.css");
+		plannedExpensesTab.setContent(pane);
+		PlannedExpensesTabController plannedExpensesTabController = loader.getController();
+		plannedExpensesTabController.drawChart(plannedExpensesTabController.prepareDataToChart(budgetList, chosenYear));
+	}
+	
+	protected void loadAllExpensesTab()
+	{
+		Pane pane = null;
+		FXMLLoader loader = new FXMLLoader();
+    	loader.setLocation(this.getClass().getResource("/fxml/AllExpensesTab.fxml"));
+    	try 
+    	{
+			pane = loader.load();
+		} 
+    	catch (IOException e) 
+    	{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		allExpensesTab.setContent(pane);
+		AllExpensesTabController allExpensesTabController = loader.getController();
+		//allExpensesTabController.drawChart(allExpensesTabController.prepareDataToChart(budgetList, chosenYear));
 	}
 }
+

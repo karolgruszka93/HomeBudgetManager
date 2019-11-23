@@ -22,11 +22,8 @@ public class PlannedExpenses extends Budget
 	
 //------GETTER'S------//
 	
-
-	
 //------SETTER'S------//
 
-
-
 //------METHOD'S------//
+	
 }
