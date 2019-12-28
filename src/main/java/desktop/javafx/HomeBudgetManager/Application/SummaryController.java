@@ -151,9 +151,12 @@ public class SummaryController extends BudgetController
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	pane.getStylesheets().add("/css/AllExpensesChartStyle.css");
 		allExpensesTab.setContent(pane);
 		AllExpensesTabController allExpensesTabController = loader.getController();
-		//allExpensesTabController.drawChart(allExpensesTabController.prepareDataToChart(budgetList, chosenYear));
+		allExpensesTabController.drawChart(allExpensesTabController.prepareDataToConstExpChart(budgetList, chosenYear));
+		allExpensesTabController.drawChart(allExpensesTabController.prepareDataToSavChart(budgetList, chosenYear));
+		allExpensesTabController.drawChart(allExpensesTabController.prepareDataToPlanExpChart(budgetList, chosenYear));
 	}
 }
 

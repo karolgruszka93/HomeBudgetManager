@@ -1,7 +1,10 @@
 package desktop.javafx.HomeBudgetManager.Application;
 
+import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -9,15 +12,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
+
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class MenuController 
+public class MenuController extends BudgetController
 {
 	private ArrayList<Budget> budgetList;
-	private MainController mainController;
-	private Pane pane = null;
 	
 	@FXML
 	private Button exitButton;
@@ -40,22 +42,12 @@ public class MenuController
 	
 //------SETTER'S------//
 	
-	protected void setMainController(MainController mainController) 
-	{
-		this.mainController = mainController;
-	}
-	
 	public void setBudgetList(ArrayList<Budget> budgetList)
 	{
 		this.budgetList = budgetList;
 	}
 
 //------GETTER'S------//
-	
-	protected MainController getMainController() 
-	{
-		return mainController;
-	}
 	
 	public ArrayList<Budget> getBudgetList() 
 	{
@@ -142,7 +134,60 @@ public class MenuController
 	@FXML
 	private void onClickLoadButton(ActionEvent event) 
 	{
-
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open .hbm file");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("HBM", "*.hbm"));
+		File file = fileChooser.showOpenDialog(null);
+        if (file != null) 
+        {
+            openFile(file);
+        }
+	}
+	
+	protected void openFile(File file)
+	{
+		String[] lineInFile = new String[5];
+		try 
+		{
+			Scanner readFile = new Scanner(file);
+			while(readFile.hasNextLine())
+			{
+				String line = readFile.nextLine();
+				lineInFile = line.split(", ");
+				if(lineInFile[0].equals("ce"))
+				{
+					ConstantExpenses ce = new ConstantExpenses();
+					ce.setChosenDate(Integer.parseInt(lineInFile[3]), Integer.parseInt(lineInFile[4]));
+					ce.setAmountDescription(lineInFile[1]);
+					ce.setAmount(BigDecimal.valueOf(Double.parseDouble(lineInFile[2])));
+					budgetList.add(ce);
+				}
+				if(lineInFile[0].equals("sv"))
+				{
+					Savings sv = new Savings();
+					sv.setChosenDate(Integer.parseInt(lineInFile[3]), Integer.parseInt(lineInFile[4]));
+					sv.setAmountDescription(lineInFile[1]);
+					sv.setAmount(BigDecimal.valueOf(Double.parseDouble(lineInFile[2])));
+					budgetList.add(sv);				}
+				if(lineInFile[0].equals("pe"))
+				{
+					PlannedExpenses pe = new PlannedExpenses();
+					pe.setChosenDate(Integer.parseInt(lineInFile[3]), Integer.parseInt(lineInFile[4]));
+					pe.setAmountDescription(lineInFile[1]);
+					pe.setAmount(BigDecimal.valueOf(Double.parseDouble(lineInFile[2])));
+					budgetList.add(pe);
+				}
+			}
+			readFile.close();
+		} 
+		catch (IOException e) 
+		{
+			loadWarningScreen("File reading error. \nTry again.");
+		}
+		catch (NumberFormatException nf)
+		{
+			loadWarningScreen("The input file contains an error. \nTry again.");
+		}
 	}
 
 	@FXML
@@ -218,5 +263,6 @@ public class MenuController
 	{
 
 	}
+	
 }
 
