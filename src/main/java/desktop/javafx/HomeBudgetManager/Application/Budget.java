@@ -16,6 +16,7 @@ public abstract class Budget
 	{
 		this.currentDate = Calendar.getInstance();
 		this.chosenDate = Calendar.getInstance();
+		this.chosenDate.set(Calendar.DAY_OF_MONTH, 15);
 	}
 	
 //------GETTER'S------//
@@ -50,8 +51,8 @@ public abstract class Budget
 	
 	protected void setChosenDate(int month, int year) 
 	{		
-		this.chosenDate.set(Calendar.YEAR, year);
 		this.chosenDate.set(Calendar.MONTH, month);
+		this.chosenDate.set(Calendar.YEAR, year);
 	}
 	
 	public void setAmountDescription(String amountDescription) 
@@ -71,6 +72,4 @@ public abstract class Budget
 		this.amountDescription = amountDescription;
 		this.amount = amount;	
 	}
-	
-
 }

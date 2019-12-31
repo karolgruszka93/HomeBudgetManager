@@ -1,7 +1,11 @@
 package desktop.javafx.HomeBudgetManager.Application;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -12,7 +16,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -191,6 +194,76 @@ public class MenuController extends BudgetController
 	}
 
 	@FXML
+	private void onClickSaveButton(ActionEvent event) 
+	{
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save .hbm file");
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("HBM", "*.hbm"));
+		File file = fileChooser.showSaveDialog(null);
+        if (file != null) 
+        {
+			saveFile(file);
+        }
+	}
+	
+	private void saveFile(File file) 
+	{
+		FileOutputStream fileOutputStream = null;
+		try 
+		{
+			fileOutputStream = new FileOutputStream(file);
+		} 
+		catch (FileNotFoundException e) 
+		{
+			loadWarningScreen("File does not exist. \nTry again.");
+		}
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));		 
+		
+		for (int i=0; i<budgetList.size(); i++) 
+		{
+			Budget budgetItem = budgetList.get(i);
+			try 
+			{
+				if(budgetItem instanceof ConstantExpenses) 
+				{
+					writer.write("ce, " + budgetItem.getAmountDescription() +", "+ budgetItem.getAmount() 
+					+", "+ budgetItem.getChosenMonth() +", "+ budgetItem.getChosenYear());
+				}
+				if(budgetItem instanceof Savings) 
+				{
+					writer.write("sv, " + budgetItem.getAmountDescription() +", "+ budgetItem.getAmount() 
+					+", "+ budgetItem.getChosenMonth() +", "+ budgetItem.getChosenYear());
+				}
+				if(budgetItem instanceof PlannedExpenses) 
+				{
+					writer.write("pe, " + budgetItem.getAmountDescription() +", "+ budgetItem.getAmount() 
+					+", "+ budgetItem.getChosenMonth() +", "+ budgetItem.getChosenYear());
+				}
+			} 
+			catch (IOException e) 
+			{
+				loadWarningScreen("File saving error. \nTry again.");
+			}
+			try 
+			{
+				writer.newLine();
+			} 
+			catch (IOException e) 
+			{
+				loadWarningScreen("File saving error. \nTry again.");
+			}
+		}
+		try 
+		{
+			writer.close();
+		} 
+		catch (IOException e) 
+		{
+			loadWarningScreen("File saving error. \nTry again.");
+		}
+	}
+
+	@FXML
 	private void onClickPlannedExpensesButton(ActionEvent event) 
 	{
 		FXMLLoader loader = new FXMLLoader();
@@ -209,12 +282,6 @@ public class MenuController extends BudgetController
 		PlannedExpensesController plannedExpensesController = loader.getController();
 		plannedExpensesController.setMainController(mainController);
 		plannedExpensesController.setBudgetList(budgetList);
-	}
-
-	@FXML
-	private void onClickSaveButton(ActionEvent event) 
-	{
-
 	}
 
 	@FXML

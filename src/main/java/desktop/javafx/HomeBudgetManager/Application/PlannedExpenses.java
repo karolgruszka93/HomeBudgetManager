@@ -16,6 +16,7 @@ public class PlannedExpenses extends Budget
 		super.chosenDate = Calendar.getInstance();
 		super.chosenDate.set(Calendar.YEAR, year);
 		super.chosenDate.set(Calendar.MONTH, month);
+		super.chosenDate.set(Calendar.DAY_OF_MONTH, 15);
 		super.amountDescription = amountDescription;
 		super.amount = amount;
 	} 

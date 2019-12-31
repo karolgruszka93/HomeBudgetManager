@@ -9,27 +9,27 @@
    <children>
       <ImageView fitHeight="117.0" fitWidth="108.0" layoutX="196.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/logo.png" />
+            <Image url="@/image/logo.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="30.0" fitWidth="135.0" layoutX="277.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/logo_eclipse.png" />
+            <Image url="@/image/logo_eclipse.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="50.0" fitWidth="136.0" layoutX="24.0" layoutY="233.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/logo_javafx.png" />
+            <Image url="@/image/logo_javafx.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="45.0" fitWidth="200.0" layoutX="428.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/logo_scene_builder.png" />
+            <Image url="@/image/logo_scene_builder.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="26.0" fitWidth="112.0" layoutX="160.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/logo_maven.png" />
+            <Image url="@/image/logo_maven.png" />
          </image>
       </ImageView>
       <Label layoutX="211.0" layoutY="220.0" text="Created with:" />
