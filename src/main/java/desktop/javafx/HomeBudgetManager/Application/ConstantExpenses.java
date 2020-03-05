@@ -5,7 +5,7 @@ import java.util.Calendar;
 
 public class ConstantExpenses extends Budget
 {
-
+	
 	ConstantExpenses()
 	{
 		super();
@@ -22,15 +22,4 @@ public class ConstantExpenses extends Budget
 		super.amount = amount;
 	} 
 	
-//------GETTER'S------//
-	
-
-	
-//------SETTER'S------//
-
-
-
-//------METHOD'S------//
-	
-
 }

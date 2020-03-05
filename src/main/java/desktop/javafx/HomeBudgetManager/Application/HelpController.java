@@ -12,7 +12,6 @@ import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
-
 public class HelpController implements Initializable 
 {
 	
@@ -65,11 +64,11 @@ public class HelpController implements Initializable
     	}
     	if (selectedTreeItem.equals("Constant Expenses"))
     	{
-    		textArea.setText("In this window enter your monthly constant expenses, for example flat payments or fuel costs.");
+    		textArea.setText("In this window enter your monthly constant outgoings, for example rent for an apartment.");
     	}
     	if (selectedTreeItem.equals("Planned Expenses"))
     	{
-			textArea.setText("In this window enter your planned expenses that are not constant, for example cost of buying a laptop.");
+			textArea.setText("In this window enter your planned outgoings that are not constant.");
     	}
     	if (selectedTreeItem.equals("Savings"))
     	{
@@ -77,7 +76,7 @@ public class HelpController implements Initializable
     	}
     	if (selectedTreeItem.equals("Summary"))
     	{
-			textArea.setText("This window include charts summarizing expenses and savings.");
+			textArea.setText("This window include charts summarizing outgoings and savings.");
     	}
     }
 }

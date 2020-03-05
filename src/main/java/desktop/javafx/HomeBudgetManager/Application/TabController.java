@@ -23,7 +23,7 @@ public abstract class TabController
     @FXML
     private Label amountLabel;
     
-    void drawChart(ArrayList<Budget> expensesList)
+    protected void drawChart(ArrayList<Budget> expensesList)
     {
     	XYChart.Series<String, BigDecimal> dataSeries = new XYChart.Series<String, BigDecimal>();
 		BigDecimal januaryAmount = new BigDecimal(0.0);

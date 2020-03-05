@@ -2,9 +2,11 @@ package desktop.javafx.HomeBudgetManager.Application;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
@@ -33,28 +35,31 @@ public class MainController
 //-----METHOD'S------// 
 	
 	@FXML
-	protected void initialize()
+	protected void initialize() 
 	{
 		loadMenuScreen(); 
 	}
 
-	protected void loadMenuScreen() {
-		FXMLLoader loader = new FXMLLoader();	
-		loader.setLocation(this.getClass().getResource("/fxml/MenuScreen.fxml"));
+	protected void loadMenuScreen() 
+	{
 		try 
 		{
+			FXMLLoader loader = new FXMLLoader();	
+			loader.setLocation(this.getClass().getResource("/fxml/MenuScreen.fxml"));
 			pane = loader.load();
+			setScreen(pane);
+			MenuController menuController = loader.getController();
+			menuController.setMainController(this);
+			menuController.setBudgetList(budgetList);
 		} 
 		catch (IOException e) 
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Alert alert = new Alert(AlertType.ERROR, "An error occurred while app running. Try again");
+			alert.setTitle("Error");
+			alert.showAndWait();
+			Platform.exit();
+			System.exit(0);	
 		}
-		
-		setScreen(pane);
-		MenuController menuController = loader.getController();
-		menuController.setMainController(this);
-		menuController.setBudgetList(budgetList);
 	}
 	
 	protected void setScreen(Pane pane)

@@ -67,14 +67,14 @@ public class ConstantExpensesController extends BudgetController
 	}
 	
     @FXML
-    private void onClickApplyYearButton(ActionEvent event) 
+    private void onClickApplyYearButton(ActionEvent event)
     {
     	try 
     	{
         	String inputYear = textFieldYears.getText();
         	if ((Integer.parseInt(inputYear) > 0) & (Integer.parseInt(inputYear) < 10000) & (comboBoxMonths.getValue() != null))
         	{
-        		constantExpenses.setChosenDate(parseMonth(comboBoxMonths.getValue()), Integer.parseInt(inputYear));
+        		constantExpenses.setChosenDate(parseMonth(), Integer.parseInt(inputYear));
         		selectedDateLabel.setVisible(true);
             	monthLabel.setText(comboBoxMonths.getValue());
             	yearLabel.setText(String.valueOf(constantExpenses.getChosenYear()));
@@ -104,7 +104,7 @@ public class ConstantExpensesController extends BudgetController
     	}
     	catch(NumberFormatException e)
     	{
-    		loadWarningScreen("The 'year' field must contain a numeric value. \nTry again.");
+			loadWarningScreen("The 'year' field must contain a numeric value. \nTry again.");
     	}
     	
     	if (budgetList.size() != 0)
@@ -142,7 +142,7 @@ public class ConstantExpensesController extends BudgetController
        	       	expensesTableView.getItems().add(new ConstantExpenses(amountDescription, inputAmount, 
        	       									 constantExpenses.getChosenMonth(), constantExpenses.getChosenYear()));
        	       	textFieldExpensesDescription.clear();
-       	       	textFieldAmount.clear();
+       	      	textFieldAmount.clear();
        		}
     	}
        	catch(NumberFormatException e)

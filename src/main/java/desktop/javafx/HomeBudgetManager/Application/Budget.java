@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-
 public abstract class Budget 
 {
 	protected Calendar currentDate;
@@ -21,18 +20,18 @@ public abstract class Budget
 	
 //------GETTER'S------//
 
-	protected String getCurrentDate() 
+	public String getCurrentDate() 
 	{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");	
 		return dateFormat.format(currentDate.getTime());
 	}
 	
-	protected int getChosenYear()
+	public int getChosenYear()
 	{
 		return chosenDate.get(Calendar.YEAR);
 	}
 	 
-	protected int getChosenMonth()
+	public int getChosenMonth()
 	{
 		return chosenDate.get(Calendar.MONTH);
 	}
@@ -49,7 +48,7 @@ public abstract class Budget
 
 //------SETTER'S------//
 	
-	protected void setChosenDate(int month, int year) 
+	public void setChosenDate(int month, int year) 
 	{		
 		this.chosenDate.set(Calendar.MONTH, month);
 		this.chosenDate.set(Calendar.YEAR, year);

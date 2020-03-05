@@ -3,7 +3,6 @@ package desktop.javafx.HomeBudgetManager.Application;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -68,14 +67,14 @@ public class PlannedExpensesController extends BudgetController
 	}
 	
     @FXML
-    private void onClickApplyYearButton(ActionEvent event) 
+    private void onClickApplyYearButton(ActionEvent event)
     {
      	try 
     	{
         	String inputYear = textFieldYears.getText();
         	if ((Integer.parseInt(inputYear) > 0) & (Integer.parseInt(inputYear) < 10000) & (comboBoxMonths.getValue() != null))
         	{
-        		plannedExpenses.setChosenDate(parseMonth(comboBoxMonths.getValue()), Integer.parseInt(inputYear));
+        		plannedExpenses.setChosenDate(parseMonth(), Integer.parseInt(inputYear));
         		selectedDateLabel.setVisible(true);
             	monthLabel.setText(comboBoxMonths.getValue());
             	yearLabel.setText(String.valueOf(plannedExpenses.getChosenYear()));
@@ -124,7 +123,7 @@ public class PlannedExpensesController extends BudgetController
     }
 
     @FXML
-    private void onClickAddExpenseButton(ActionEvent event) 
+    private void onClickAddExpenseButton(ActionEvent event)
     {
        	String amountDescription = textFieldExpensesDescription.getText();
        	try 

@@ -5,16 +5,16 @@ import javafx.scene.control.Label;
 
 public class WarningController 
 {
-
+	
     @FXML
     private Label warningLabel;
 
-    protected Label getWarningLabel() 
+    public Label getWarningLabel() 
 	{
 		return warningLabel;
 	}
 
-    protected void setWarningLabel(Label warningLabel) 
+    public void setWarningLabel(Label warningLabel) 
 	{
 		this.warningLabel = warningLabel;
 	}

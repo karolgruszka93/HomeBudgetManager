@@ -67,7 +67,7 @@ public class SavingsController extends BudgetController
 	}
     
     @FXML
-    private void onClickAddSavingButton(ActionEvent event) 
+    private void onClickAddSavingButton(ActionEvent event)
     {
     	String amountDescription = textFieldSavingsDescription.getText();
        	try 
@@ -103,7 +103,7 @@ public class SavingsController extends BudgetController
         	String inputYear = textFieldYears.getText();
         	if ((Integer.parseInt(inputYear) > 0) & (Integer.parseInt(inputYear) < 10000) & (comboBoxMonths.getValue() != null))
         	{
-        		savings.setChosenDate(parseMonth(comboBoxMonths.getValue()), Integer.parseInt(inputYear));
+        		savings.setChosenDate(parseMonth(), Integer.parseInt(inputYear));
         		selectedDateLabel.setVisible(true);
             	monthLabel.setText(comboBoxMonths.getValue());
             	yearLabel.setText(String.valueOf(savings.getChosenYear()));

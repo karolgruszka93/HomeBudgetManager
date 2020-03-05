@@ -1,14 +1,18 @@
 package desktop.javafx.HomeBudgetManager.Application;
 
 import java.io.IOException;
+
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -41,14 +45,14 @@ public abstract class BudgetController
 
 //------GETTER'S------//
     
-	protected MainController getMainController() 
+    public MainController getMainController() 
 	{
 		return mainController;
 	}
 
 //------SETTER'S------//
 	
-	protected void setMainController(MainController mainController) 
+    public void setMainController(MainController mainController) 
 	{
 		this.mainController = mainController;
 	}
@@ -56,24 +60,29 @@ public abstract class BudgetController
 //------METHODS'S------//
     
     @FXML
-    protected void onClickBackButton(ActionEvent event) 
+    protected void onClickBackButton(ActionEvent event)
     {
     	mainController.loadMenuScreen();
     }
     
-    protected void loadWarningScreen(String warningText)
+    protected void loadWarningScreen(String warningText) 
     {
 		FXMLLoader loader = new FXMLLoader();
     	loader.setLocation(this.getClass().getResource("/fxml/WarningScreen.fxml"));
+
     	try 
     	{
 			pane = loader.load();
 		} 
     	catch (IOException e) 
     	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Alert alert = new Alert(AlertType.ERROR, "An error occurred while app running. Try again");
+			alert.setTitle("Error");
+			alert.showAndWait();
+			Platform.exit();
+			System.exit(0);	
 		}
+
     	Scene scene = new Scene(pane);
     	Stage stage = new Stage();
     	stage.setResizable(false);
@@ -88,7 +97,7 @@ public abstract class BudgetController
     	warningLabel.setText(warningText);
     }
     
-    protected int parseMonth(String month)
+    protected int parseMonth()
     {
 		int inputMonth = 0;
    		if(comboBoxMonths.getValue().compareTo("January") == 0) inputMonth = 0;

@@ -15,7 +15,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -67,19 +69,20 @@ public class MenuController extends BudgetController
 	}
 	
 	@FXML
-	private void onClickAboutButton(ActionEvent event) 
+	private void onClickAboutButton(ActionEvent event)
 	{
 		FXMLLoader loader = new FXMLLoader();
     	loader.setLocation(this.getClass().getResource("/fxml/AboutScreen.fxml"));
-    	try 
-    	{
+
+		try 
+		{
 			pane = loader.load();
 		} 
-    	catch (IOException e) 
-    	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		catch (IOException e) 
+		{
+			showAlert();
 		}
+
     	Scene scene = new Scene(pane);
     	Stage stage = new Stage();
     	stage.setResizable(false);
@@ -91,18 +94,18 @@ public class MenuController extends BudgetController
 	}
 
 	@FXML
-	private void onClickConstantExpensesButton(ActionEvent event) 
+	private void onClickConstantExpensesButton(ActionEvent event)
 	{
 		FXMLLoader loader = new FXMLLoader();
     	loader.setLocation(this.getClass().getResource("/fxml/ConstantExpensesScreen.fxml"));
-    	try 
-    	{
+    
+		try 
+		{
 			pane = loader.load();
 		} 
-    	catch (IOException e) 
-    	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		catch (IOException e) 
+		{
+			showAlert();
 		}
     	
 		mainController.setScreen(pane); 
@@ -112,19 +115,20 @@ public class MenuController extends BudgetController
 	}
 
 	@FXML
-	private void onClickHelpButton(ActionEvent event) 
+	private void onClickHelpButton(ActionEvent event)
 	{
 		FXMLLoader loader = new FXMLLoader();
     	loader.setLocation(this.getClass().getResource("/fxml/HelpScreen.fxml"));
-    	try 
-    	{
+
+		try 
+		{
 			pane = loader.load();
 		} 
-    	catch (IOException e) 
-    	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		catch (IOException e) 
+		{
+			showAlert();
 		}
+
     	Scene scene = new Scene(pane);
     	Stage stage = new Stage();
     	stage.setResizable(false);
@@ -135,7 +139,7 @@ public class MenuController extends BudgetController
 	}
 
 	@FXML
-	private void onClickLoadButton(ActionEvent event) 
+	private void onClickLoadButton(ActionEvent event)
 	{
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open .hbm file");
@@ -143,7 +147,7 @@ public class MenuController extends BudgetController
 		File file = fileChooser.showOpenDialog(null);
         if (file != null) 
         {
-            openFile(file);
+			openFile(file);
         }
 	}
 	
@@ -185,7 +189,7 @@ public class MenuController extends BudgetController
 		} 
 		catch (IOException e) 
 		{
-			loadWarningScreen("File reading error. \nTry again.");
+			loadWarningScreen("An error occurred while trying to open the file. \\nTry again.");
 		}
 		catch (NumberFormatException nf)
 		{
@@ -194,7 +198,7 @@ public class MenuController extends BudgetController
 	}
 
 	@FXML
-	private void onClickSaveButton(ActionEvent event) 
+	private void onClickSaveButton(ActionEvent event)
 	{
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save .hbm file");
@@ -206,7 +210,7 @@ public class MenuController extends BudgetController
         }
 	}
 	
-	private void saveFile(File file) 
+	private void saveFile(File file)
 	{
 		FileOutputStream fileOutputStream = null;
 		try 
@@ -217,8 +221,8 @@ public class MenuController extends BudgetController
 		{
 			loadWarningScreen("File does not exist. \nTry again.");
 		}
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));		 
 		
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fileOutputStream));		 
 		for (int i=0; i<budgetList.size(); i++) 
 		{
 			Budget budgetItem = budgetList.get(i);
@@ -239,18 +243,11 @@ public class MenuController extends BudgetController
 					writer.write("pe, " + budgetItem.getAmountDescription() +", "+ budgetItem.getAmount() 
 					+", "+ budgetItem.getChosenMonth() +", "+ budgetItem.getChosenYear());
 				}
-			} 
-			catch (IOException e) 
-			{
-				loadWarningScreen("File saving error. \nTry again.");
-			}
-			try 
-			{
 				writer.newLine();
 			} 
 			catch (IOException e) 
 			{
-				loadWarningScreen("File saving error. \nTry again.");
+				loadWarningScreen("An error occurred while trying to save the file. \nTry again.");
 			}
 		}
 		try 
@@ -259,23 +256,23 @@ public class MenuController extends BudgetController
 		} 
 		catch (IOException e) 
 		{
-			loadWarningScreen("File saving error. \nTry again.");
+			loadWarningScreen("An error occurred while trying to save the file. \\nTry again.");
 		}
 	}
 
 	@FXML
-	private void onClickPlannedExpensesButton(ActionEvent event) 
+	private void onClickPlannedExpensesButton(ActionEvent event)
 	{
 		FXMLLoader loader = new FXMLLoader();
     	loader.setLocation(this.getClass().getResource("/fxml/PlannedExpensesScreen.fxml"));
-    	try 
-    	{
+
+		try 
+		{
 			pane = loader.load();
 		} 
-    	catch (IOException e) 
-    	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		catch (IOException e) 
+		{
+			showAlert();
 		}
     	
 		mainController.setScreen(pane); 
@@ -285,20 +282,20 @@ public class MenuController extends BudgetController
 	}
 
 	@FXML
-	private void onClickSavingsButton(ActionEvent event) 
+	private void onClickSavingsButton(ActionEvent event)
 	{
 		FXMLLoader loader = new FXMLLoader();
     	loader.setLocation(this.getClass().getResource("/fxml/SavingsScreen.fxml"));
-    	try 
-    	{
+
+		try 
+		{
 			pane = loader.load();
 		} 
-    	catch (IOException e) 
-    	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		catch (IOException e) 
+		{
+			showAlert();
 		}
-    	
+		
 		mainController.setScreen(pane); 
 		SavingsController savingsController = loader.getController();
 		savingsController.setMainController(mainController);
@@ -306,29 +303,33 @@ public class MenuController extends BudgetController
 	}
 
 	@FXML
-	private void onClickSummaryButton(ActionEvent event) 
+	private void onClickSummaryButton(ActionEvent event)
 	{
 		FXMLLoader loader = new FXMLLoader();
     	loader.setLocation(this.getClass().getResource("/fxml/SummaryScreen.fxml"));
-    	try 
-    	{
+
+		try 
+		{
 			pane = loader.load();
 		} 
-    	catch (IOException e) 
-    	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		catch (IOException e) 
+		{
+			showAlert();
 		}
+
     	mainController.setScreen(pane); 
     	SummaryController summaryController = loader.getController();
     	summaryController.setMainController(mainController);
     	summaryController.setBudgetList(budgetList);
 	}
 	
-	@FXML
-	private void initialize()
+	private void showAlert()
 	{
-
+		Alert alert = new Alert(AlertType.ERROR, "An error occurred while app running. Try again");
+		alert.setTitle("Error");
+		alert.showAndWait();
+		Platform.exit();
+		System.exit(0);
 	}
 	
 }

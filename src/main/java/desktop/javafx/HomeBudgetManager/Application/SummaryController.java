@@ -3,11 +3,15 @@ package desktop.javafx.HomeBudgetManager.Application;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 
 public class SummaryController extends BudgetController 
@@ -28,14 +32,14 @@ public class SummaryController extends BudgetController
 
 //------GETTER'S------//
 	
-	protected ArrayList<Budget> getBudgetList() 
+    public ArrayList<Budget> getBudgetList() 
 	{
 		return budgetList;
 	}
 
 //------SETTER'S------//
 		
-	protected void setBudgetList(ArrayList<Budget> budgetList) 
+    public void setBudgetList(ArrayList<Budget> budgetList) 
 	{
 		this.budgetList = budgetList;
 	}
@@ -43,7 +47,7 @@ public class SummaryController extends BudgetController
 //------METHODS'S------//
 
     @FXML
-    void onClickApplyYearButton(ActionEvent event) 
+    void onClickApplyYearButton(ActionEvent event)
     {
       	try 
     	{
@@ -55,6 +59,11 @@ public class SummaryController extends BudgetController
             	applyYearButton.setDisable(true);
             	textFieldYears.setMouseTransparent(true);
             	textFieldYears.setDisable(true);
+            	
+        		loadConstantExpensesTab();
+        		loadSavingsTab();
+        		loadPlannedExpensesTab();
+        		loadAllExpensesTab();
         	}
         	else
         	{        		
@@ -65,10 +74,6 @@ public class SummaryController extends BudgetController
     	{
     		loadWarningScreen("The 'year' field must contain a numeric value. \nTry again.");
     	} 
-		loadConstantExpensesTab();
-		loadSavingsTab();
-		loadPlannedExpensesTab();
-		loadAllExpensesTab();
     }
     
 	@FXML
@@ -82,15 +87,16 @@ public class SummaryController extends BudgetController
 		Pane pane = null;
 		FXMLLoader loader = new FXMLLoader();
     	loader.setLocation(this.getClass().getResource("/fxml/ConstantExpensesTab.fxml"));
-    	try 
-    	{
+
+		try 
+		{
 			pane = loader.load();
 		} 
-    	catch (IOException e) 
-    	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		catch (IOException e) 
+		{
+			showAlert();
 		}
+
 		constantExpensesTab.setContent(pane);
 		ConstantExpensesTabController constantExpensesTabController = loader.getController();
 		constantExpensesTabController.drawChart(constantExpensesTabController.prepareDataToChart(budgetList, chosenYear));
@@ -101,16 +107,16 @@ public class SummaryController extends BudgetController
 		Pane pane = null;
 		FXMLLoader loader = new FXMLLoader();
     	loader.setLocation(this.getClass().getResource("/fxml/SavingsTab.fxml"));
-    	try 
-    	{
-			pane = loader.load();
 
+		try 
+		{
+			pane = loader.load();
 		} 
-    	catch (IOException e) 
-    	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		catch (IOException e) 
+		{
+			showAlert();
 		}
+
 		pane.getStylesheets().add("/css/SavingsChartStyle.css");
 		savingsTab.setContent(pane);
 		SavingsTabController savingsTabController = loader.getController();
@@ -122,15 +128,16 @@ public class SummaryController extends BudgetController
 		Pane pane = null;
 		FXMLLoader loader = new FXMLLoader();
     	loader.setLocation(this.getClass().getResource("/fxml/PlannedExpensesTab.fxml"));
-    	try 
-    	{
+
+		try 
+		{
 			pane = loader.load();
 		} 
-    	catch (IOException e) 
-    	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		catch (IOException e) 
+		{
+			showAlert();
 		}
+
     	pane.getStylesheets().add("/css/PlannedExpensesChartStyle.css");
 		plannedExpensesTab.setContent(pane);
 		PlannedExpensesTabController plannedExpensesTabController = loader.getController();
@@ -142,21 +149,31 @@ public class SummaryController extends BudgetController
 		Pane pane = null;
 		FXMLLoader loader = new FXMLLoader();
     	loader.setLocation(this.getClass().getResource("/fxml/AllExpensesTab.fxml"));
-    	try 
-    	{
+
+		try 
+		{
 			pane = loader.load();
 		} 
-    	catch (IOException e) 
-    	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		catch (IOException e) 
+		{
+			showAlert();
 		}
+
     	pane.getStylesheets().add("/css/AllExpensesChartStyle.css");
 		allExpensesTab.setContent(pane);
 		AllExpensesTabController allExpensesTabController = loader.getController();
 		allExpensesTabController.drawChart(allExpensesTabController.prepareDataToConstExpChart(budgetList, chosenYear));
 		allExpensesTabController.drawChart(allExpensesTabController.prepareDataToSavChart(budgetList, chosenYear));
 		allExpensesTabController.drawChart(allExpensesTabController.prepareDataToPlanExpChart(budgetList, chosenYear));
+	}
+	
+	private void showAlert()
+	{
+		Alert alert = new Alert(AlertType.ERROR, "An error occurred while app running. Try again");
+		alert.setTitle("Error");
+		alert.showAndWait();
+		Platform.exit();
+		System.exit(0);
 	}
 }
 

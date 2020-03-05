@@ -21,14 +21,4 @@ public class Savings extends Budget
 		super.amount = amount;
 	} 
 	
-//------GETTER'S------//
-	
-
-	
-//------SETTER'S------//
-
-
-
-//------METHOD'S------//
-	
 }

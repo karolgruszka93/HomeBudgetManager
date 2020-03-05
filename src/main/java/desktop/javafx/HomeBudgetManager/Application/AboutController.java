@@ -4,15 +4,14 @@ public class AboutController
 {
 	MainController mainController;
 
-    protected MainController getMainController() 
+	public MainController getMainController() 
     {
 		return mainController;
 	}
 
-	protected void setMainController(MainController mainController)
+    public void setMainController(MainController mainController)
 	{
 		this.mainController = mainController;
 	}
-
 }
 

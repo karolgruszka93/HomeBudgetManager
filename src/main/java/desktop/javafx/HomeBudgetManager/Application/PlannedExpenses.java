@@ -21,10 +21,4 @@ public class PlannedExpenses extends Budget
 		super.amount = amount;
 	} 
 	
-//------GETTER'S------//
-	
-//------SETTER'S------//
-
-//------METHOD'S------//
-	
 }
