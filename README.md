@@ -5,7 +5,7 @@
 3. [Screenshots](#screenshots)
 
 ## Project description <a name="description"></a>
-HomeBudgetManager is a simple desktop application that can help to manage outgoins and savings.
+HomeBudgetManager is a simple desktop application that can help to manage outgoings and savings.
 User can add monthly savings and constant or planned outgoings to see
 charts summarizing provided data during the year.
 
