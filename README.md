@@ -16,3 +16,6 @@ Application was created using:
 - Maven
 
 ## Screenshots <a name="screenshots"></a>
+<img src="gitimg/home.png">
+<img src="gitimg/win1.png">
+<img src="gitimg/win2.png">
